@@ -1,7 +1,7 @@
 package co.com.devco.certification.android.swaglabs.models;
 
 /**
- * Clase modelo del usuario que se desea loggear en Travelocity (el actor)
+ * Clase modelo del usuario que se desea loggear en Swag Labs (el actor)
  * @author manco.5@hotmail.com
  */
 

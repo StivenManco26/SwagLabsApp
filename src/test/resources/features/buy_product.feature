@@ -15,9 +15,8 @@ Feature: buy product in the Swag Labs app
 
   @buyProduct
   Scenario: Buy Product
-    Given that Juan wants to buy a product in the Swag Labs app
-    When he adds the first item to the cart
-    And he goes to the cart
+    Given that Juan adds the first item to the cart
+    When he goes to the cart
     And he performs the checkout
     And he enters his information
       | First Name | Last Name | Postal Code |

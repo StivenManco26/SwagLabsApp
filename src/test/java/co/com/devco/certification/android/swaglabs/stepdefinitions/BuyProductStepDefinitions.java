@@ -1,10 +1,12 @@
 package co.com.devco.certification.android.swaglabs.stepdefinitions;
 
+import co.com.devco.certification.android.swaglabs.models.InformationModel;
 import co.com.devco.certification.android.swaglabs.models.UserModel;
 import co.com.devco.certification.android.swaglabs.questions.SwagLabsLoginResult;
-import co.com.devco.certification.android.swaglabs.tasks.EnterThe;
-import co.com.devco.certification.android.swaglabs.tasks.OpenThe;
-import cucumber.api.DataTable;
+import co.com.devco.certification.android.swaglabs.questions.TheCheckoutOverview;
+import co.com.devco.certification.android.swaglabs.questions.TheCheckoutWasCompleted;
+import co.com.devco.certification.android.swaglabs.questions.TheProductHasBeen;
+import co.com.devco.certification.android.swaglabs.tasks.*;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -39,38 +41,34 @@ public class BuyProductStepDefinitions {
         OnStage.theActorInTheSpotlight().should(seeThat(SwagLabsLoginResult.containsTheProductsWord()));
     }
 
-    @Given("^that (.*) wants to buy a product in the Swag Labs app$")
-    public void thatTheActorWantsToBuyAProductInTheSwagLabsApp() {
-
-    }
-
-    @When("^he adds the first item to the cart$")
-    public void heAddsTheFirstItemToTheCart() {
-
+    @Given("^that (.*) adds the first item to the cart$")
+    public void thatTheActorAddsTheFirstItemToTheCart(String actorName) {
+        theActorCalled(actorName).wasAbleTo(AddTheFirstItem.toTheCart());
+        OnStage.theActorInTheSpotlight().should(seeThat(TheProductHasBeen.addedToTheCart()));
     }
 
     @When("^he goes to the cart$")
     public void heGoesToTheCart() {
-
+        OnStage.theActorInTheSpotlight().attemptsTo(EnterTheShopping.cart());
     }
 
     @When("^he performs the checkout$")
     public void hePerformsTheCheckout() {
-
+        OnStage.theActorInTheSpotlight().attemptsTo(PerformClickInThe.checkoutButton());
     }
 
     @When("^he enters his information$")
-    public void heEntersHisInformation(DataTable arg1) {
-
+    public void heEntersHisInformation(List<InformationModel> information) {
+        OnStage.theActorInTheSpotlight().attemptsTo(EnterTheInformation.checkout(information.get(0)));
     }
 
     @Then("^he should see the summary of his purchase$")
     public void heShouldSeeTheSummaryOfHisPurchase() {
-
+        OnStage.theActorInTheSpotlight().should(seeThat(TheCheckoutOverview.isDisplayed()));
     }
 
     @Then("^he should see the complete checkout message$")
     public void heShouldSeeTheCompleteCheckoutMessage() {
-
+        OnStage.theActorInTheSpotlight().should(seeThat(TheCheckoutWasCompleted.correctly()));
     }
 }
